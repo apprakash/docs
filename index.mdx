@@ -1,71 +1,70 @@
 ---
-title: Introduction
-description: "Welcome to the home of your new documentation"
+title: Maker Residency 2025
+description: "Reimagining public grievance redressal in India"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+## Overview
 
-## Setting up
+The OpenNyAI Maker Residency 2025 is a two-month hybrid program that culminates in a five-day in-person sprint (June 2–6, 2025, Delhi). It is designed to reimagine public grievance redressal in India by building interoperable, user-centric, and scalable digital solutions. The residency is co-hosted with the World Bank's CivicAI Collaborative and supported by partners such as DARPG, the World Bank, and Agami.
 
-The first step to world-class documentation is setting up your editing environments.
+## Vision
+
+The residency aims to demonstrate how grievance redress systems can be:
+
+- **Integrated** with grassroots and community platforms
+- **Responsive** to citizen voices in multiple formats and languages
+- **Data-driven** in surfacing systemic issues
+- **Collaborative**, leveraging the strengths of the broader ecosystem
+
+## Core Focus Areas
+
+Teams will work on building tools and systems to:
+
+- Expand grievance intake from diverse, underrepresented communities
+- Improve grievance categorization, triaging, and routing
+- Enable citizen- and GRO-facing dashboards for transparency
+- Integrate voice-based, multilingual, and inclusive tech interfaces
+- Surface grievance data as early indicators of governance failures
+
+## Design Principles
+
+- **Human-Centered & Inclusive**: Built around actual user journeys
+- **Open Source**: Encouraging reuse and adaptation across contexts
+- **Scalable & Interoperable**: Ready for integration into CPGRAMS and beyond
+- **Responsible AI**: Prioritizing ethics, equity, and data protection
+- **Maker-First**: Centering builders, civic technologists, and justice innovators
+
+## CPGRAMS Simulation API
+
+As part of the residency, we have developed a simulation API that mimics the functionality of CPGRAMS (Centralized Public Grievance Redress and Monitoring System) in India. This API allows developers to:
 
 <CardGroup cols={2}>
   <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
+    title="User Management"
+    icon="users"
+    href="/api-reference/endpoint/get"
   >
-    Get your docs set up locally for easy development
+    Create and manage users with different roles (citizens, officers, admins)
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="Grievance Submission"
+    icon="file-pen"
+    href="/api-reference/endpoint/create"
   >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
-
-## Make it yours
-
-Update your docs to your brand and add valuable content for the best user conversion.
-
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
+    Submit and track grievances through the system
   </Card>
   <Card
-    title="Reference APIs"
+    title="Status Updates"
+    icon="arrows-spin"
+    href="/api-reference/endpoint/update-grievance"
+  >
+    Update grievance statuses and assign to officers
+  </Card>
+  <Card
+    title="API Documentation"
     icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
+    href="/api-reference/introduction"
   >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
+    Explore the full API documentation
   </Card>
 </CardGroup>
