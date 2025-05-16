@@ -342,31 +342,6 @@
             "description": "Unique identifier for the user",
             "type": "string"
           },
-          "Name": {
-            "description": "The full name of the user",
-            "type": "string"
-          },
-          "Email": {
-            "description": "Email address of the user",
-            "type": "string",
-            "format": "email"
-          },
-          "State": {
-            "description": "State of residence of the user",
-            "type": "string"
-          },
-          "Gender": {
-            "description": "Gender of the user",
-            "type": "string"
-          },
-          "District": {
-            "description": "District of residence of the user",
-            "type": "string"
-          },
-          "Mobile": {
-            "description": "Mobile number of the user (10 digits)",
-            "type": "string"
-          },
           "status": {
             "description": "Status of the user creation or operation",
             "type": "string"
