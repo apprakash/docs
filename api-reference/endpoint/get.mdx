@@ -1,6 +1,6 @@
 ---
-title: 'Get Users'
-openapi: 'GET /users'
+title: 'Get User'
+openapi: 'GET /users/{user_id}'
 ---
 
-Returns a list of all users in the CPGRAMS simulation system that the authenticated user has access to. The response can be limited by specifying the `limit` parameter.
+Returns a user by ID from the system. This endpoint requires authentication via a bearer token. The response includes all user details such as Name, Email, State, Gender, District, Mobile, and status.

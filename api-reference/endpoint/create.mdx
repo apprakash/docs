@@ -1,6 +1,6 @@
 ---
-title: 'Create Grievance'
-openapi: 'POST /grievances'
+title: 'Create User'
+openapi: 'POST /users'
 ---
 
-Submits a new grievance to the CPGRAMS simulation system. The authenticated user will be automatically associated with the grievance. Required fields include `title` and `description`. You can optionally specify a `category` and include `attachments` as an array of URLs.
+Creates a new user with validation. This endpoint requires authentication via a bearer token. Required fields include `Name`, `Email`, `State`, `Gender`, `District`, and `Mobile`. The Email field must be in a valid email format, and the Mobile field must be exactly 10 digits.
