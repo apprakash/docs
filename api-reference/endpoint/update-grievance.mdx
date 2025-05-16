@@ -1,0 +1,10 @@
+---
+title: 'Update Grievance Status'
+openapi: 'PUT /grievances/{grievance_id}'
+---
+
+Updates the status of an existing grievance. This endpoint requires authentication via a bearer token. The required field is `status`, which must be one of the valid status options (pending, in_progress, resolved, rejected). Optional fields include `resolution_notes` which can provide additional information about the status change.
+
+If the grievance is not found, a 404 error is returned. If an invalid status is provided, a 400 error is returned with details about the valid status options.
+
+The response includes the ID of the updated grievance, a status message indicating successful update, and the fields that were updated.

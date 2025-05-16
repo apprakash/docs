@@ -1,0 +1,8 @@
+---
+title: 'Get Grievance'
+openapi: 'GET /grievances/{grievance_id}'
+---
+
+Retrieves a grievance by its unique identifier. This endpoint returns the complete grievance details including all fields such as title, description, category, status, timestamps, and any additional metadata related to the grievance processing.
+
+If the grievance is not found, a 404 error is returned. The response includes a status field and the complete grievance object with all its properties.

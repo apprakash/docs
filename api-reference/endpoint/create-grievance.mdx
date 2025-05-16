@@ -1,0 +1,10 @@
+---
+title: 'Create Grievance'
+openapi: 'POST /grievances'
+---
+
+Creates a new grievance in the Xata database. This endpoint requires authentication via a bearer token. Required fields include `title`, `description`, `category`, and `user_id`. The user must exist in the system, otherwise a 404 error is returned.
+
+The grievance is created with a default status of "pending" and timestamps are automatically generated. Additional fields like `priority`, `cpgrams_category`, `reformed_top_level_category`, `reformed_last_level_category`, and `reformed_flag` can be provided as needed.
+
+The response includes the ID of the created grievance and a status message indicating successful creation.

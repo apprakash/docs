@@ -179,7 +179,7 @@
         }
       },
       "post": {
-        "description": "Creates a new grievance in the system",
+        "description": "Creates a new grievance in the Xata database",
         "requestBody": {
           "description": "Grievance to add to the system",
           "content": {
@@ -192,18 +192,38 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Grievance response",
+          "201": {
+            "description": "Grievance created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Grievance"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the created grievance"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status message"
+                    }
+                  }
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -215,12 +235,12 @@
         }
       }
     },
-    "/grievances/{id}": {
+    "/grievances/{grievance_id}": {
       "get": {
-        "description": "Returns a grievance based on the ID supplied",
+        "description": "Get a grievance by its ID",
         "parameters": [
           {
-            "name": "id",
+            "name": "grievance_id",
             "in": "path",
             "description": "ID of grievance to fetch",
             "required": true,
@@ -235,7 +255,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Grievance"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the operation"
+                    },
+                    "grievance": {
+                      "$ref": "#/components/schemas/Grievance"
+                    }
+                  }
                 }
               }
             }
@@ -249,14 +278,24 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       },
-      "patch": {
-        "description": "Updates the status of a grievance",
+      "put": {
+        "description": "Update the status of a grievance",
         "parameters": [
           {
-            "name": "id",
+            "name": "grievance_id",
             "in": "path",
             "description": "ID of grievance to update",
             "required": true,
@@ -282,13 +321,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Grievance"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the updated grievance"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status message"
+                    },
+                    "updated_fields": {
+                      "type": "object",
+                      "description": "Fields that were updated"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Bad request - Invalid status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Grievance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -390,9 +463,13 @@
       },
       "Grievance": {
         "required": [
+          "id",
           "title",
           "description",
-          "user_id"
+          "category",
+          "user_id",
+          "status",
+          "created_at"
         ],
         "type": "object",
         "properties": {
@@ -408,12 +485,17 @@
             "description": "Detailed description of the grievance",
             "type": "string"
           },
-          "user_id": {
-            "description": "ID of the user who submitted the grievance",
-            "type": "string"
-          },
           "category": {
             "description": "Category of the grievance",
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority level: low, medium, high, critical",
+            "type": "string",
+            "default": "medium"
+          },
+          "user_id": {
+            "description": "ID of the user who submitted the grievance",
             "type": "string"
           },
           "status": {
@@ -421,10 +503,6 @@
             "type": "string",
             "enum": ["pending", "in_progress", "resolved", "rejected"],
             "default": "pending"
-          },
-          "assigned_to": {
-            "description": "ID of the officer assigned to the grievance",
-            "type": "string"
           },
           "created_at": {
             "description": "Timestamp when the grievance was created",
@@ -435,13 +513,138 @@
             "description": "Timestamp when the grievance was last updated",
             "type": "string",
             "format": "date-time"
+          },
+          "resolution_notes": {
+            "description": "Notes on the resolution of the grievance",
+            "type": "string"
+          },
+          "grievance_received_date": {
+            "description": "Date when the grievance was received",
+            "type": "string",
+            "format": "date-time"
+          },
+          "grievance_closing_date": {
+            "description": "Date when the grievance was closed",
+            "type": "string",
+            "format": "date-time"
+          },
+          "organisation_closing_date": {
+            "description": "Date when the organisation closed the grievance",
+            "type": "string",
+            "format": "date-time"
+          },
+          "org_status_date": {
+            "description": "Date of the last status update by the organisation",
+            "type": "string",
+            "format": "date-time"
+          },
+          "reported_as_covid19_case_date": {
+            "description": "Date when the grievance was reported as a COVID-19 case",
+            "type": "string",
+            "format": "date-time"
+          },
+          "covid19_category": {
+            "description": "COVID-19 related category if applicable",
+            "type": "string"
+          },
+          "reformed_flag": {
+            "description": "Flag indicating if the grievance is part of reformed process",
+            "type": "boolean",
+            "default": false
+          },
+          "cpgrams_category": {
+            "description": "CPGRAMS category of the grievance",
+            "type": "string"
+          },
+          "reformed_top_level_category": {
+            "description": "Top level category in the reformed classification",
+            "type": "string"
+          },
+          "reformed_last_level_category": {
+            "description": "Last level category in the reformed classification",
+            "type": "string"
+          },
+          "forwarded_to_subordinate": {
+            "description": "Flag indicating if the grievance was forwarded to a subordinate",
+            "type": "boolean"
+          },
+          "forwarded_to_subordinate_details": {
+            "description": "Details about forwarding to subordinate",
+            "type": "string"
+          },
+          "rating": {
+            "description": "User rating of the grievance resolution",
+            "type": "integer"
+          },
+          "feedback": {
+            "description": "User feedback on the grievance resolution",
+            "type": "string"
+          },
+          "satisfaction_level": {
+            "description": "User satisfaction level with the resolution",
+            "type": "string"
+          },
+          "final_reply": {
+            "description": "Final reply to the grievance",
+            "type": "string"
+          },
+          "appeal_no": {
+            "description": "Appeal number if the grievance was appealed",
+            "type": "string"
+          },
+          "appeal_date": {
+            "description": "Date when the appeal was filed",
+            "type": "string",
+            "format": "date-time"
+          },
+          "appeal_reason": {
+            "description": "Reason for the appeal",
+            "type": "string"
+          },
+          "appeal_closing_date": {
+            "description": "Date when the appeal was closed",
+            "type": "string",
+            "format": "date-time"
+          },
+          "appeal_closing_remarks": {
+            "description": "Remarks on the closing of the appeal",
+            "type": "string"
+          },
+          "organisation_grievance_receive_date": {
+            "description": "Date when the organisation received the grievance",
+            "type": "string",
+            "format": "date-time"
+          },
+          "organisation_grievance_close_date": {
+            "description": "Date when the organisation closed the grievance",
+            "type": "string",
+            "format": "date-time"
+          },
+          "officers_forwarding_grievance": {
+            "description": "Officers who forwarded the grievance",
+            "type": "string"
+          },
+          "date_of_receiving": {
+            "description": "Date when the grievance was received",
+            "type": "string",
+            "format": "date-time"
+          },
+          "officer_closed_by": {
+            "description": "Officer who closed the grievance",
+            "type": "string"
+          },
+          "final_status": {
+            "description": "Final status of the grievance",
+            "type": "string"
           }
         }
       },
       "NewGrievance": {
         "required": [
           "title",
-          "description"
+          "description",
+          "category",
+          "user_id"
         ],
         "type": "object",
         "properties": {
@@ -457,13 +660,35 @@
             "description": "Category of the grievance",
             "type": "string"
           },
-          "attachments": {
-            "description": "Array of attachment URLs",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uri"
-            }
+          "user_id": {
+            "description": "ID of the user submitting the grievance",
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority level: low, medium, high, critical",
+            "type": "string",
+            "default": "medium"
+          },
+          "cpgrams_category": {
+            "description": "CPGRAMS category of the grievance",
+            "type": "string"
+          },
+          "reformed_top_level_category": {
+            "description": "Top level category in the reformed classification",
+            "type": "string"
+          },
+          "reformed_last_level_category": {
+            "description": "Last level category in the reformed classification",
+            "type": "string"
+          },
+          "covid19_category": {
+            "description": "COVID-19 related category if applicable",
+            "type": "string"
+          },
+          "reformed_flag": {
+            "description": "Flag indicating if the grievance is part of reformed process",
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -478,12 +703,8 @@
             "type": "string",
             "enum": ["pending", "in_progress", "resolved", "rejected"]
           },
-          "comment": {
-            "description": "Comment explaining the status change",
-            "type": "string"
-          },
-          "assigned_to": {
-            "description": "ID of the officer to assign the grievance to",
+          "resolution_notes": {
+            "description": "Notes explaining the resolution or status change",
             "type": "string"
           }
         }

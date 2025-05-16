@@ -47,7 +47,10 @@
             "group": "Endpoint Examples",
             "pages": [
               "api-reference/endpoint/create",
-              "api-reference/endpoint/get"
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create-grievance",
+              "api-reference/endpoint/get-grievance",
+              "api-reference/endpoint/update-grievance"
             ]
           }
         ]
