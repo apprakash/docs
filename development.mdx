@@ -1,107 +1,206 @@
 ---
 title: 'Development'
-description: 'Preview changes locally to update your docs'
+description: 'Set up your development environment for the CPGRAMS Simulation API'
 ---
 
 <Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
+  **Prerequisites**: 
+  - Node.js (version 14 or higher)
+  - A code editor of your choice
+  - API key for the CPGRAMS Simulation API
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system:
+## Setting Up Your Development Environment
 
-**Step 1**: Install Mintlify:
+Follow these steps to set up your development environment for working with the CPGRAMS Simulation API:
 
-<CodeGroup>
+### 1. Clone the Example Repository
 
-  ```bash npm
-  npm i -g mintlify
-  ```
-
-```bash yarn
-yarn global add mintlify
-```
-
-</CodeGroup>
-
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
+We provide a starter repository with example code to help you get started quickly:
 
 ```bash
-mintlify dev
+git clone https://github.com/opennyai/cpgrams-simulation-examples.git
+cd cpgrams-simulation-examples
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
-
-### Custom Ports
-
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
-
-```bash
-mintlify dev --port 3333
-```
-
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
-
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
-
-## Mintlify Versions
-
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+### 2. Install Dependencies
 
 <CodeGroup>
 
 ```bash npm
-npm i -g mintlify@latest
+npm install
 ```
 
 ```bash yarn
-yarn global upgrade mintlify
+yarn install
 ```
 
 </CodeGroup>
 
-## Validating Links
+### 3. Configure Your API Key
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
+Create a `.env` file in the root directory of the project and add your API key:
 
-```bash
-mintlify broken-links
+```
+CPGRAMS_API_KEY=your_api_key_here
+CPGRAMS_API_URL=https://api.cpgrams-simulation.opennyai.org
 ```
 
-## Deployment
+## API Endpoints
 
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
+The CPGRAMS Simulation API provides the following key endpoints:
 
-If the deployment is successful, you should see the following:
+### User Management
 
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
+```bash
+# Create a new user
+POST /users
 
-## Code Formatting
+# Get all users
+GET /users
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+# Get a specific user
+GET /users/{userId}
+
+# Update a user
+PUT /users/{userId}
+
+# Delete a user
+DELETE /users/{userId}
+```
+
+### Grievance Management
+
+```bash
+# Submit a new grievance
+POST /grievances
+
+# Get all grievances
+GET /grievances
+
+# Get a specific grievance
+GET /grievances/{grievanceId}
+
+# Update a grievance
+PUT /grievances/{grievanceId}
+
+# Assign a grievance to an officer
+POST /grievances/{grievanceId}/assign
+
+# Update grievance status
+POST /grievances/{grievanceId}/status
+```
+
+### Webhook Notifications
+
+```bash
+# Register a webhook URL
+POST /webhooks
+
+# Get registered webhooks
+GET /webhooks
+
+# Delete a webhook
+DELETE /webhooks/{webhookId}
+```
+
+## Running the Example Applications
+
+The example repository includes several sample applications demonstrating different use cases:
+
+```bash
+# Run the citizen portal example
+npm run citizen-portal
+
+# Run the officer dashboard example
+npm run officer-dashboard
+
+# Run the analytics dashboard example
+npm run analytics-dashboard
+```
+
+Each application will be available at `http://localhost:3000` by default.
+
+## Building Your Own Applications
+
+You can use the CPGRAMS Simulation API to build your own applications for the Maker Residency 2025 program. Here are some recommended frameworks and libraries:
+
+### Frontend Frameworks
+
+- **React**: A JavaScript library for building user interfaces
+- **Vue.js**: A progressive framework for building user interfaces
+- **Angular**: A platform for building mobile and desktop web applications
+
+### Backend Frameworks
+
+- **Express.js**: A minimal and flexible Node.js web application framework
+- **FastAPI**: A modern, fast web framework for building APIs with Python
+- **Django**: A high-level Python web framework
+
+### Mobile Development
+
+- **React Native**: A framework for building native mobile applications
+- **Flutter**: Google's UI toolkit for building natively compiled applications
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Authentication and Security">
+    - Always store your API key securely and never expose it in client-side code
+    - Use environment variables to store sensitive information
+    - Implement proper error handling for API requests
+    - Consider implementing rate limiting in your application
+  </Accordion>
+
+  <Accordion title="User Experience">
+    - Design for inclusivity and accessibility
+    - Support multiple languages, especially Indian regional languages
+    - Provide clear feedback on form submissions and errors
+    - Implement responsive design for mobile users
+    - Consider offline support for areas with limited connectivity
+  </Accordion>
+
+  <Accordion title="Performance Optimization">
+    - Implement caching for frequently accessed data
+    - Minimize API calls by batching requests when possible
+    - Optimize images and assets for faster loading
+    - Use pagination for large data sets
+  </Accordion>
+</AccordionGroup>
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
+  <Accordion title="API Rate Limiting">
+    The CPGRAMS Simulation API implements rate limiting to ensure fair usage. If you receive a 429 Too Many Requests response, you should implement exponential backoff in your application.
+    
+    ```javascript
+    // Example of exponential backoff
+    const fetchWithRetry = async (url, options, retries = 3, backoff = 300) => {
+      try {
+        return await fetch(url, options);
+      } catch (err) {
+        if (retries === 0) throw err;
+        await new Promise(resolve => setTimeout(resolve, backoff));
+        return fetchWithRetry(url, options, retries - 1, backoff * 2);
+      }
+    };
+    ```
   </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
+  <Accordion title="Authentication Issues">
+    If you're experiencing authentication issues, check the following:
+    
+    1. Ensure your API key is correct and not expired
+    2. Verify that you're including the API key in the correct format (`Authorization: Bearer YOUR_API_KEY`)
+    3. Check that your API key has the necessary permissions for the endpoints you're accessing
   </Accordion>
 </AccordionGroup>
 
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+## Getting Help
+
+If you encounter any issues or have questions about the CPGRAMS Simulation API, you can:
+
+- Join the OpenNyAI Maker Residency Slack channel
+- Open an issue on the [GitHub repository](https://github.com/opennyai/cpgrams-simulation-examples/issues)
+- Contact the program coordinators at support@opennyai.org
