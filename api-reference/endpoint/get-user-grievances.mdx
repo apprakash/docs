@@ -1,0 +1,25 @@
+---
+title: 'Get User Grievances'
+openapi: 'GET /grievances/user/{user_id}'
+---
+
+Retrieves all grievances associated with a specific user, with support for pagination. This endpoint allows you to fetch either all grievances for a user or paginate through them using the query parameters.
+
+## Pagination
+
+The endpoint supports the following query parameters for pagination:
+
+- `fetch_all` (boolean): When set to `true`, returns all grievances for the user without pagination. Default is `false`.
+- `page` (integer): The page number to retrieve. Default is 1.
+- `size` (integer): Number of grievances per page. Default is 10, maximum is 100.
+
+## Response
+
+The response includes:
+- `status`: Operation status
+- `total`: Total number of grievances for the user
+- `page`: Current page number
+- `size`: Number of items per page
+- `grievances`: Array of grievance objects with complete details
+
+If the user is not found, a 404 error is returned.

@@ -39,7 +39,15 @@
               "api-reference/endpoint/get",
               "api-reference/endpoint/create-grievance",
               "api-reference/endpoint/get-grievance",
-              "api-reference/endpoint/update-grievance"
+              "api-reference/endpoint/update-grievance",
+              "api-reference/endpoint/get-user-grievances"
+            ]
+          },
+          {
+            "group": "Category & FAQ",
+            "pages": [
+              "api-reference/endpoint/categorize-grievance",
+              "api-reference/endpoint/get-faq"
             ]
           }
         ]

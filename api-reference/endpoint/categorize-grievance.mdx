@@ -1,0 +1,20 @@
+---
+title: 'Categorize Grievance'
+openapi: 'POST /category'
+---
+
+Analyzes and categorizes grievance text to determine the appropriate category. This endpoint uses natural language processing to classify the grievance text and extract structured information.
+
+## Request
+
+The request requires a text field containing the grievance content to be categorized.
+
+## Response
+
+The response includes:
+- `status`: Operation status
+- `category`: The classified category of the grievance
+- `confidence`: A confidence score (0-1) indicating the reliability of the classification
+- `formatted_fields`: Structured information extracted from the grievance text, which may include entities, key phrases, and other relevant data points
+
+This endpoint is useful for automatically categorizing new grievances or re-categorizing existing ones to ensure proper routing and handling.

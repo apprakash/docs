@@ -1,0 +1,27 @@
+---
+title: 'Get FAQs'
+openapi: 'POST /category/faq'
+---
+
+Retrieves frequently asked questions (FAQs) based on a query. This endpoint searches for relevant FAQ items that match the provided query text and returns them sorted by relevance.
+
+## Request
+
+The request requires:
+- `query`: The text to search for relevant FAQs
+
+Optional parameters:
+- `category`: Filter FAQs by a specific category
+- `limit`: Maximum number of FAQ items to return (default: 5)
+
+## Response
+
+The response includes:
+- `status`: Operation status
+- `items`: Array of FAQ items, each containing:
+  - `question`: The frequently asked question
+  - `answer`: The answer to the question
+  - `category`: Category of the FAQ item
+  - `relevance_score`: A score indicating how relevant this FAQ is to the query
+
+This endpoint is useful for providing self-service support to users by suggesting relevant FAQs based on their grievance text or specific queries.
